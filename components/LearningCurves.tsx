@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import AnswerTemplateBlock from './AnswerTemplateBlock';
 import { CURVES } from '@/lib/stat41120/content/curves';
 
 const PATHS: Record<string, { tr: string; va: string }> = {
@@ -54,7 +55,7 @@ export default function LearningCurves() {
           <>
             <div className="qbox"><b>Evidence:</b> {c.ev}</div>
             <div className="notebox"><b>Diagnosis:</b> {c.dx}<br /><b>Fix:</b> {c.fix}</div>
-            <div className="formula">{`Full-mark template:\n${c.tmpl}`}</div>
+            <AnswerTemplateBlock title="Full-mark template">{c.tmpl}</AnswerTemplateBlock>
             <div className="trapbox"><b>Common wrong answer</b> · {c.wrong}</div>
           </>
         )}

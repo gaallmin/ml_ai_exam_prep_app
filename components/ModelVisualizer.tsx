@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { VIZ_MODELS } from '@/lib/stat41120/content/visualisers';
+import EquationBlock from './EquationBlock';
 import CNNVisualizer from './CNNVisualizer';
 import RNNLab from './structure/RNNLab';
 import LSTMLab from './structure/LSTMLab';
@@ -59,7 +60,7 @@ export default function ModelVisualizer({ onTryDrill }: { onTryDrill: () => void
               <span className="stepct">Step {step + 1} / {vm.steps.length} — <b style={{ color: 'var(--amber)' }}>{st.t}</b></span>
               <button className="btn primary" onClick={() => setStep(s => Math.min(vm.steps.length - 1, s + 1))}>Next →</button>
             </div>
-            <div className="formula">{st.f}</div>
+            {st.latex && <EquationBlock latex={st.latex} title={st.t} highlight />}
             <div className="notebox">{st.d}</div>
           </div>
         );

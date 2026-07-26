@@ -12,7 +12,13 @@ export interface MapLeaf {
 export interface MapBranch { name: string; color: string; kids: MapLeaf[]; }
 
 export interface FormulaCard {
-  cat: string; f: string; when: string; trap: string; ex: string; q: string;
+  cat: string;
+  f?: string;      // DEPRECATED: old plain-text formula
+  latex?: string;  // new: LaTeX formula string
+  when: string;
+  trap: string;
+  ex: string;
+  q: string;
 }
 export type FormulaStatus = 'unseen' | 'weak' | 'memorised';
 
@@ -33,7 +39,13 @@ export type Mark = 'Correct' | 'Partially correct' | 'Incorrect';
 
 export interface SprintDay { day: string; title: string; core: string[]; items: string[]; }
 
-export interface VizStep { t: string; f: string; d: string; hi: number; }
+export interface VizStep {
+  t: string;      // title
+  f?: string;     // DEPRECATED: old plain-text formula
+  latex?: string; // new: LaTeX formula
+  d: string;      // description
+  hi: number;     // highlight index
+}
 export interface VizModel { name: string; steps: VizStep[]; }
 
 export interface WrongNote {

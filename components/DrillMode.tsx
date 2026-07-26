@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import { DRILLS } from '@/lib/stat41120/content/drills';
 import type { Drill, Mark } from '@/lib/stat41120/content/types';
+import EquationBlock from './EquationBlock';
+import AnswerTemplateBlock from './AnswerTemplateBlock';
 import { useSprintStore } from '@/lib/store';
 
 function shuffle<T>(arr: T[]): T[] {
@@ -160,7 +162,7 @@ export default function DrillMode({ initialWeakOnly, onConsumedInitial }: Props)
             <div style={{ margin: '10px 0' }}><span className={`mark ${markCls}`}>{mark}</span></div>
             <div className="small">You answered: <code>{userTxt}</code></div>
             <div className="notebox"><b>Model answer:</b> {q.sol ?? q.model}</div>
-            <div className="formula">{`Rule to memorise:\n${q.rule}`}</div>
+            <AnswerTemplateBlock title="Rule to memorise">{q.rule}</AnswerTemplateBlock>
             <div className="small"><b style={{ color: 'var(--amber)' }}>Memory hook:</b> {q.hook}</div>
             <div className="small"><b style={{ color: 'var(--coral)' }}>Exam trigger:</b> {q.trigger}</div>
           </>

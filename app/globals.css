@@ -123,6 +123,16 @@ hr{border:none;border-top:1px solid var(--line);margin:14px 0}
 .small{font-size:.78rem;color:var(--dim)}
 code{font-family:var(--mono);background:#101516;padding:1px 5px;border-radius:4px;font-size:.82rem;color:#f0e6c8}
 
+/* inline math */
+.inline-math{font-size:inherit;font-family:inherit}
+.inline-math .katex{font-size:0.95em;margin:0 1px}
+
+/* answer template block */
+.answer-template-block{background:#1c2426;border:1px solid var(--line);border-left:3px solid var(--moss);border-radius:8px;padding:10px 12px;margin:10px 0;font-size:.84rem;line-height:1.6;color:var(--ink)}
+.answer-template-block.hl{border-left-color:var(--amber);box-shadow:0 0 0 1px rgba(232,196,107,.18)}
+.atb-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:4px}
+.atb-body{color:var(--ink)}
+
 /* Structure Lab — textbook equation blocks */
 .eqblock{background:#101516;border:1px solid var(--line);border-left:3px solid var(--sky);border-radius:8px;padding:8px 12px 10px;margin:10px 0;overflow-x:auto}
 .eqblock .eqhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;min-height:14px}
@@ -135,6 +145,9 @@ code{font-family:var(--mono);background:#101516;padding:1px 5px;border-radius:4p
 .eqblock.compact .eqbody .katex{font-size:.95rem}
 .eqblock .eqcaption{font-size:.72rem;color:var(--faint);margin-top:2px;text-align:center}
 .eqblock.hl{border-left-color:var(--amber);box-shadow:0 0 0 1px rgba(232,196,107,.18),0 0 16px rgba(232,196,107,.10)}
+.eqblock.reveal{cursor:pointer;transition:filter .15s,box-shadow .15s}
+.eqblock.reveal:hover{box-shadow:0 0 0 1px rgba(232,196,107,.25),0 0 8px rgba(232,196,107,.12)}
+.eqbody.blurred{filter:blur(8px);user-select:none}
 
 /* Structure Lab — mode tabs */
 .modetabs{display:flex;gap:6px;margin:8px 0 10px}

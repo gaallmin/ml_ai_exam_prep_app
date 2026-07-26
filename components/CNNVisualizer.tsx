@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import EquationBlock from './EquationBlock';
 import { useSprintStore } from '@/lib/store';
 
 const CONV_INPUT = [[1,0,2,1,0],[0,1,0,2,1],[3,0,1,0,2],[1,2,0,1,0],[0,1,3,0,1]];
@@ -97,12 +98,15 @@ export default function CNNVisualizer({ onTryDrill }: { onTryDrill: () => void }
           <div><label className="fl">Pool size</label><input type="number" value={c.pool} onChange={num('pool')} /></div>
           <div><label className="fl">Pool stride</label><input type="number" value={c.ps} onChange={num('ps')} /></div>
         </div>
-        <div className="formula">{
-`conv out:    ⌊(${c.Win} − ${c.k} + 2·${c.p})/${c.s}⌋ + 1 = ${wc}   →  ${wc}×${wc}×${c.Dout}
-conv params: (${c.k}·${c.k}·${c.Din} + 1) × ${c.Dout} = ${params}
-pool out:    ⌊(${wc} − ${c.pool})/${c.ps}⌋ + 1 = ${wp}   →  ${wp}×${wp}×${c.Dout}  (depth preserved, 0 params)
-flatten:     ${wp} × ${wp} × ${c.Dout} = ${flat}`
-        }</div>
+        <EquationBlock
+          title="Dimension & parameter calculations"
+          latex={`\\begin{aligned}
+            \\text{Conv out:} \\quad W &= \\left\\lfloor\\frac{${c.Win}-${c.k}+2\\cdot${c.p}}{${c.s}}\\right\\rfloor + 1 = ${wc} \\quad &\\Rightarrow ${wc}\\times${wc}\\times${c.Dout} \\\\
+            \\text{Conv params:} \\quad & (${c.k}\\cdot${c.k}\\cdot${c.Din}+1) \\times ${c.Dout} = ${params} \\\\
+            \\text{Pool out:} \\quad W &= \\left\\lfloor\\frac{${wc}-${c.pool}}{${c.ps}}\\right\\rfloor + 1 = ${wp} \\quad &\\Rightarrow ${wp}\\times${wp}\\times${c.Dout} \\\\
+            \\text{Flatten:} \\quad & ${wp} \\times ${wp} \\times ${c.Dout} = ${flat}
+          \\end{aligned}`}
+        />
         <div className="trapbox">
           <b>Traps</b> · output depth = number of filters · pooling preserves depth, 0 params · flatten has 0 params ·
           a following dense layer of 128 units would add ({flat}+1)×128 = {(flat + 1) * 128} params — dense layers dominate ·

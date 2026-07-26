@@ -10,12 +10,14 @@ interface Props {
   caption?: string;       // small note under the equation
   highlight?: boolean;    // amber glow — used when the animation is on this equation
   compact?: boolean;
+  reveal?: boolean;       // true: show blurred by default, tap to reveal (for active recall)
 }
 
 /** Join rows (each containing a single `&` alignment point) into an aligned block. */
 export const aligned = (rows: string[]) => `\\begin{aligned}${rows.join(' \\\\[2pt] ')}\\end{aligned}`;
 
-export default function EquationBlock({ latex, title, caption, highlight, compact }: Props) {
+export default function EquationBlock({ latex, title, caption, highlight, compact, reveal: revealMode }: Props) {
+  const [shown, setShown] = useState(false);
   const html = useMemo(() => {
     try {
       return katex.renderToString(latex, {
@@ -37,17 +39,25 @@ export default function EquationBlock({ latex, title, caption, highlight, compac
     });
   };
 
+  const isBlurred = revealMode && !shown;
+
   return (
-    <div className={`eqblock ${highlight ? 'hl' : ''} ${compact ? 'compact' : ''}`}>
+    <div
+      className={`eqblock ${highlight ? 'hl' : ''} ${compact ? 'compact' : ''} ${isBlurred ? 'reveal' : ''}`}
+      onClick={() => revealMode && setShown(true)}
+      role={revealMode ? 'button' : undefined}
+      aria-label={revealMode ? 'Tap to reveal formula' : undefined}
+    >
+      {revealMode && !shown && <div className="reveal-hint">tap to reveal</div>}
       {(title || true) && (
         <div className="eqhead">
           {title && <span className="eqtitle">{title}</span>}
-          <button className="eqcopy" onClick={copy} title="Copy LaTeX source" aria-label="Copy LaTeX source">
+          <button className="eqcopy" onClick={e => { e.stopPropagation(); copy(); }} title="Copy LaTeX source" aria-label="Copy LaTeX source">
             {copied ? '✓ copied' : 'copy LaTeX'}
           </button>
         </div>
       )}
-      <div className="eqbody" dangerouslySetInnerHTML={{ __html: html }} />
+      <div className={`eqbody ${isBlurred ? 'blurred' : ''}`} dangerouslySetInnerHTML={{ __html: html }} />
       {caption && <div className="eqcaption">{caption}</div>}
     </div>
   );

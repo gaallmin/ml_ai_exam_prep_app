@@ -2,7 +2,7 @@
 import { FORMULAS } from '@/lib/stat41120/content/formulas';
 import type { FormulaStatus } from '@/lib/stat41120/content/types';
 import { useSprintStore } from '@/lib/store';
-import Reveal from './Reveal';
+import EquationBlock from './EquationBlock';
 
 const STATUSES: FormulaStatus[] = ['unseen', 'weak', 'memorised'];
 
@@ -23,8 +23,7 @@ export default function FormulaBank() {
         return (
           <div className="card" key={f.cat}>
             <h4>{f.cat}</h4>
-            <div className="reveal-hint">tap to reveal</div>
-            <Reveal className="formula">{f.f}</Reveal>
+            {f.latex && <EquationBlock latex={f.latex} reveal />}
             <div className="small"><b style={{ color: 'var(--moss)' }}>When:</b> {f.when}</div>
             <div className="trapbox"><b>Trap</b> · {f.trap}</div>
             <div className="small"><b style={{ color: 'var(--sky)' }}>Micro example:</b> <code>{f.ex}</code></div>
