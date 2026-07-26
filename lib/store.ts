@@ -10,6 +10,21 @@ import { loadWrongNotes, seedWrongNotesOnce, insertWrongNote, updateWrongNote } 
 
 export type SyncStatus = 'idle' | 'saving' | 'saved' | 'error';
 
+// One Structure Lab (RNN/LSTM/GRU visualiser) answer attempt.
+export interface StructureAttempt {
+  qid: string;
+  model: string;             // 'rnn' | 'lstm' | 'gru'
+  mode: string;              // 'watch' | 'trace' | 'exam'
+  step: number | null;
+  question: string;
+  userAnswer: string;
+  correctAnswer: string;
+  mark: Mark;
+  wk: string;                // weakness type
+  hook: string;
+  trigger: string;
+}
+
 interface SprintStore {
   userId: string | null;
   loaded: boolean;
@@ -31,6 +46,7 @@ interface SprintStore {
   selfMarkWrongNote: (noteId: string, recalled: boolean) => void;
   saveFreeResponse: (drill: Drill, userAnswer: string, mark: Mark) => void;
   saveCalculation: (topic: string, question: string, answer: string) => void;
+  saveStructureAttempt: (p: StructureAttempt) => void;
   addManualWrongNote: (n: Omit<WrongNote, 'id'>) => void;
   reset: () => void;
 }
@@ -180,6 +196,58 @@ export const useSprintStore = create<SprintStore>((set, get) => ({
     if (userId) track(set, insertSavedAnswer(userId, {
       source: 'cnn-calculator', topic, question, user_answer: answer,
     }));
+  },
+
+  saveStructureAttempt: (p) => {
+    const { userId, wrongNotes } = get();
+    const now = Date.now();
+    if (userId) {
+      track(set, insertSavedAnswer(userId, {
+        source: `structure-lab:${p.model}:${p.mode}`,
+        topic: `${p.model.toUpperCase()} Structure Lab`,
+        question: p.step != null ? `[step ${p.step + 1}] ${p.question}` : p.question,
+        user_answer: p.userAnswer,
+        model_answer: p.correctAnswer,
+        mark: p.mark,
+      }));
+    }
+    const srcId = `sl:${p.qid}`;
+    const existing = wrongNotes.find(n => n.sourceId === srcId);
+    if (p.mark === 'Correct') {
+      if (!existing || existing.mastered) return;
+      const streak = (existing.correctStreak ?? 0) + 1;
+      const { due, mastered } = nextDueAfterRecall(streak, now);
+      const updated: WrongNote = { ...existing, correctStreak: streak, last: now, due, mastered };
+      set({ wrongNotes: wrongNotes.map(n => n.id === updated.id ? updated : n) });
+      if (userId && !updated.id.startsWith('local-')) track(set, updateWrongNote(userId, updated));
+      return;
+    }
+    const wrongText = `Q: ${p.question} — answered "${p.userAnswer}". Correct: ${p.correctAnswer}`;
+    if (existing) {
+      const updated: WrongNote = {
+        ...existing,
+        wrong: wrongText,
+        count: existing.count + 1,
+        correctStreak: 0,
+        mastered: false,
+        last: now,
+        due: nextDueAfterMistake(existing.count + 1, now),
+      };
+      set({ wrongNotes: wrongNotes.map(n => n.id === updated.id ? updated : n) });
+      if (userId && !updated.id.startsWith('local-')) track(set, updateWrongNote(userId, updated));
+    } else {
+      get().addManualWrongNote({
+        sourceId: srcId,
+        topic: `${p.model.toUpperCase()} structure`,
+        wk: p.wk,
+        wrong: wrongText,
+        rule: p.correctAnswer,
+        hook: p.hook,
+        trigger: p.trigger,
+        src: `structure-lab:${p.mode}`,
+        count: 1, correctStreak: 0, last: now, due: now + MIN20, mastered: false,
+      });
+    }
   },
 
   addManualWrongNote: (n) => {
