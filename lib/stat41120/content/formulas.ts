@@ -8,7 +8,8 @@ export const FORMULAS: FormulaCard[] = [
   "when": "Any layer computation; h(0)=x, h(G)=o.",
   "trap": "z first, activation second.",
   "ex": "W=[1,−1], b=0.5, h=(2,1) → z=1.5, ReLU→1.5",
-  "q": "Compute h(1) for a given W, b, x with ReLU."
+  "q": "Compute h(1) for a given W, b, x with ReLU.",
+  "logicLabId": "forward-prop"
  },
  {
   "cat": "BCE",
@@ -16,7 +17,8 @@ export const FORMULAS: FormulaCard[] = [
   "when": "Binary classification with sigmoid output.",
   "trap": "Single instance: drop 1/N. y=1 kills the second term.",
   "ex": "y=1, p=.8 → −log(.8)=0.223",
-  "q": "Compute the loss for one instance given o and y."
+  "q": "Compute the loss for one instance given o and y.",
+  "logicLabId": "bce"
  },
  {
   "cat": "Softmax",
@@ -24,7 +26,8 @@ export const FORMULAS: FormulaCard[] = [
   "when": "Multiclass output layer.",
   "trap": "Outputs sum to 1; subtracting max(z) first is numerically safe and changes nothing.",
   "ex": "z=(1,0) → o=(.731,.269)",
-  "q": "Compute softmax outputs for z=(2,1,0)."
+  "q": "Compute softmax outputs for z=(2,1,0).",
+  "logicLabId": "softmax"
  },
  {
   "cat": "Cross-entropy",

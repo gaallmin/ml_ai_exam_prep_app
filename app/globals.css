@@ -202,6 +202,49 @@ code{font-family:var(--mono);background:#101516;padding:1px 5px;border-radius:4p
 .blendbar .new{background:#3a3320;color:var(--amber);display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;transition:width .1s}
 .sl-formulas summary{cursor:pointer;font-size:.88rem;color:var(--sky);font-weight:600}
 
+/* Equation Logic Lab */
+.eqlogic-lab{position:fixed;inset:0;background:rgba(10,14,15,.85);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal-content{background:var(--panel);border:1px solid var(--line);border-radius:12px;width:100%;max-width:700px;max-height:85vh;overflow:auto;padding:0}
+.modal-header{background:var(--panel2);border-bottom:1px solid var(--line);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.modal-header h3{margin:0;font-size:1.1rem;font-weight:600}
+.btn-close{background:none;border:none;color:var(--dim);font-size:1.4rem;cursor:pointer;padding:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+.btn-close:hover{color:var(--ink)}
+.eqlogic-nav{display:flex;overflow-x:auto;border-bottom:1px solid var(--line);gap:1px}
+.eqlogic-nav .tab{flex:1;min-width:70px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--dim);padding:10px 12px;font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;white-space:nowrap;transition:border-color .15s,color .15s}
+.eqlogic-nav .tab:hover{border-bottom-color:var(--amber);color:var(--amber)}
+.eqlogic-nav .tab.on{border-bottom-color:var(--amber);color:var(--amber);font-weight:600}
+.eqlogic-body{padding:16px}
+.derivation-step{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;margin:10px 0}
+.step-header{display:flex;gap:8px;align-items:center;margin-bottom:8px;font-size:.9rem}
+.step-num{font-weight:700;color:var(--amber);min-width:50px}
+.step-title{flex:1;color:var(--ink)}
+.btn-reveal-step{background:none;border:none;color:var(--sky);font-size:.7rem;cursor:pointer;padding:2px 6px;border:1px solid var(--line);border-radius:4px}
+.step-flow{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.arrow{text-align:center;color:var(--faint);font-weight:700}
+.step-explanation{font-size:.82rem;line-height:1.5;color:var(--ink);margin-top:8px}
+.exam-phrase{background:#18242a;border-left:3px solid var(--amber);padding:6px 8px;margin-top:6px;border-radius:4px;font-size:.78rem}
+.hidden-steps{font-size:.8rem;margin-top:6px}
+.hidden-steps summary{cursor:pointer;color:var(--sky)}
+.hidden-list{background:var(--panel);padding:6px;margin-top:4px;border-radius:4px}
+.hidden-item{margin:4px 0;font-family:var(--mono);font-size:.75rem;color:var(--dim)}
+.term-explainer{margin:10px 0}
+.term-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.78rem;transition:border-color .15s,background .15s}
+.chip:hover{border-color:var(--amber)}
+.chip.on{background:var(--amber);color:#1c1a12;border-color:var(--amber);font-weight:600}
+.term-detail{background:var(--panel2);border-left:3px solid var(--sky);border-radius:6px;padding:10px;margin-top:8px}
+.term-name{font-weight:600;color:var(--sky);margin-bottom:4px}
+.visual-derivation{margin:10px 0}
+.numeric-example{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:10px;margin-top:8px}
+.example-values{display:grid;grid-template-columns:auto 1fr;gap:8px;margin:6px 0}
+.example-row{display:contents}
+.example-row > span:first-child{text-align:right;font-size:.8rem;color:var(--dim)}
+.example-sep{grid-column:1/-1;text-align:center;color:var(--faint);margin:4px 0}
+.recall-check{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:12px;margin:10px 0}
+.recall-prompt{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px;margin:8px 0;font-size:.85rem;min-height:30px}
+.recall-check textarea{font-family:var(--sans);font-size:.85rem;margin:8px 0}
+.derivation-list{margin:10px 0}
+
 /* Next.js additions */
 .auth-wrap{max-width:380px;margin:12vh auto;padding:0 16px}
 .syncdot{position:fixed;top:10px;right:12px;font-size:.68rem;color:var(--faint);z-index:60}
