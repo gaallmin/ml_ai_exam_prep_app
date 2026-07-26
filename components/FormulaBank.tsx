@@ -1,0 +1,45 @@
+'use client';
+import { FORMULAS } from '@/lib/stat41120/content/formulas';
+import type { FormulaStatus } from '@/lib/stat41120/content/types';
+import { useSprintStore } from '@/lib/store';
+import Reveal from './Reveal';
+
+const STATUSES: FormulaStatus[] = ['unseen', 'weak', 'memorised'];
+
+export default function FormulaBank() {
+  const formulaProgress = useSprintStore(s => s.formulaProgress);
+  const markFormulaStatus = useSprintStore(s => s.markFormulaStatus);
+  const memorised = FORMULAS.filter(f => formulaProgress[f.cat] === 'memorised').length;
+
+  return (
+    <section className="page active">
+      <h2>Formula Bank</h2>
+      <p className="lead">
+        Formulas are blurred. Recall each one out loud or on paper, then tap to check.
+        Mark your recall honestly — status syncs across devices. {memorised}/{FORMULAS.length} memorised.
+      </p>
+      {FORMULAS.map(f => {
+        const status: FormulaStatus = formulaProgress[f.cat] ?? 'unseen';
+        return (
+          <div className="card" key={f.cat}>
+            <h4>{f.cat}</h4>
+            <div className="reveal-hint">tap to reveal</div>
+            <Reveal className="formula">{f.f}</Reveal>
+            <div className="small"><b style={{ color: 'var(--moss)' }}>When:</b> {f.when}</div>
+            <div className="trapbox"><b>Trap</b> · {f.trap}</div>
+            <div className="small"><b style={{ color: 'var(--sky)' }}>Micro example:</b> <code>{f.ex}</code></div>
+            <div className="qbox"><b>Professor asks:</b> {f.q}</div>
+            <div className="fstatus">
+              {STATUSES.map(st => (
+                <button key={st} className={`btn ${status === st ? 'on' : ''}`}
+                  onClick={() => markFormulaStatus(f.cat, st)}>
+                  {st}
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </section>
+  );
+}
