@@ -6,7 +6,8 @@ import DerivationStep from './DerivationStep';
 import EquationTermExplainer from './EquationTermExplainer';
 import VisualDerivationPanel from './VisualDerivationPanel';
 import EquationRecallCheck from './EquationRecallCheck';
-import type { EquationLogicContent, Mark } from '@/lib/stat41120/content/types';
+import type { EquationLogicContent } from '@/lib/stat41120/content/types';
+import { DRILLS } from '@/lib/stat41120/content/drills';
 
 interface Props {
   content: EquationLogicContent;
@@ -91,6 +92,26 @@ export default function EquationLogicLab({ content, onClose }: Props) {
                   • {crit}
                 </div>
               ))}
+              {content.relatedDrillIds.length > 0 && (
+                <>
+                  <div className="small" style={{ marginTop: 14, marginBottom: 6 }}>
+                    <b>Related professor-style drill{content.relatedDrillIds.length > 1 ? 's' : ''}:</b>
+                  </div>
+                  {content.relatedDrillIds.map(id => {
+                    const d = DRILLS.find(dr => dr.id === id);
+                    if (!d) return null;
+                    return (
+                      <div key={id} className="qbox" style={{ marginBottom: 6 }}>
+                        <div className="small" style={{ color: 'var(--dim)', marginBottom: 3 }}>{d.topic}</div>
+                        {d.q}
+                      </div>
+                    );
+                  })}
+                  <div className="small" style={{ color: 'var(--dim)' }}>
+                    Open Drill mode from the bottom nav to answer these under strict marking.
+                  </div>
+                </>
+              )}
             </>
           )}
 

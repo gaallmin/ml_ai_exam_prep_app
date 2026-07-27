@@ -35,7 +35,8 @@ export const FORMULAS: FormulaCard[] = [
   "when": "Multiclass with one-hot y.",
   "trap": "Only the true-class term survives.",
   "ex": "true class prob .5 → CE=0.693",
-  "q": "Compute CE given softmax output and one-hot target."
+  "q": "Compute CE given softmax output and one-hot target.",
+  "logicLabId": "cross-entropy"
  },
  {
   "cat": "Softmax + CE derivative",
@@ -43,7 +44,8 @@ export const FORMULAS: FormulaCard[] = [
   "when": "Output-layer delta for backprop.",
   "trap": "Holds for the COMBINED softmax+CE — not for softmax alone.",
   "ex": "o=(.7,.3), y=(1,0) → δ=(−.3,.3)",
-  "q": "Derive ∂ℓ/∂zk via the softmax Jacobian and chain rule."
+  "q": "Derive ∂ℓ/∂zk via the softmax Jacobian and chain rule.",
+  "logicLabId": "softmax-ce-derivative"
  },
  {
   "cat": "Hidden-layer delta",
@@ -51,7 +53,8 @@ export const FORMULAS: FormulaCard[] = [
   "when": "Backprop recursion through hidden layers.",
   "trap": "Downstream weight + local derivative. ReLU′ = 1 if z>0 else 0.",
   "ex": "w_next=.5, δ_next=−.2, z>0 → δ=−.1",
-  "q": "Compute the gradient for a highlighted hidden weight."
+  "q": "Compute the gradient for a highlighted hidden weight.",
+  "logicLabId": "backprop-delta"
  },
  {
   "cat": "Weight decay (L2)",
@@ -59,7 +62,8 @@ export const FORMULAS: FormulaCard[] = [
   "when": "Any L2-regularised update question.",
   "trap": "ADD λw to the gradient; never multiply λ by ∇ℓ.",
   "ex": "w=.6, ∇=−.2, λ=.1, η=.5 → w=.67",
-  "q": "Perform one weight-decay update step."
+  "q": "Perform one weight-decay update step.",
+  "logicLabId": "weight-decay"
  },
  {
   "cat": "L1 penalty",
@@ -75,7 +79,8 @@ export const FORMULAS: FormulaCard[] = [
   "when": "Every conv shape question (same for H).",
   "trap": "Padding is 2p in the numerator; floor before +1.",
   "ex": "32,k5,p0,s1 → 28",
-  "q": "Give the output shape of a conv layer."
+  "q": "Give the output shape of a conv layer.",
+  "logicLabId": "cnn-output-dim"
  },
  {
   "cat": "CNN parameters",
@@ -83,7 +88,8 @@ export const FORMULAS: FormulaCard[] = [
   "when": "Trainable parameter counts.",
   "trap": "+1 bias per FILTER; Din is input depth, Dout = number of filters.",
   "ex": "5×5×3+1=76; ×16 filters=1216",
-  "q": "Count the parameters of a conv layer."
+  "q": "Count the parameters of a conv layer.",
+  "logicLabId": "cnn-params"
  },
  {
   "cat": "Pooling",
@@ -91,7 +97,8 @@ export const FORMULAS: FormulaCard[] = [
   "when": "Pooling shape questions.",
   "trap": "Depth preserved; zero parameters.",
   "ex": "28, 2×2, s2 → 14",
-  "q": "Give the output shape after max pooling."
+  "q": "Give the output shape after max pooling.",
+  "logicLabId": "pooling-dim"
  },
  {
   "cat": "Flatten",
@@ -99,7 +106,8 @@ export const FORMULAS: FormulaCard[] = [
   "when": "Between conv blocks and dense layers.",
   "trap": "No parameters; the following dense layer often dominates the count.",
   "ex": "7×7×64 → 3136",
-  "q": "Compute the flatten size and next dense layer's parameters."
+  "q": "Compute the flatten size and next dense layer's parameters.",
+  "logicLabId": "flatten"
  },
  {
   "cat": "Simple RNN",
@@ -115,7 +123,8 @@ export const FORMULAS: FormulaCard[] = [
   "when": "Gate interpretation & recall questions.",
   "trap": "c(t) ≠ h(t); gates sigmoid, candidate tanh.",
   "ex": "ft=1, it=0 → pure memory copy",
-  "q": "Name each gate's role and activation."
+  "q": "Name each gate's role and activation.",
+  "logicLabId": "lstm-equations"
  },
  {
   "cat": "GRU gates",
@@ -123,7 +132,8 @@ export const FORMULAS: FormulaCard[] = [
   "when": "GRU recall & comparison with LSTM.",
   "trap": "Reset gate sits inside the candidate; no cell state.",
   "ex": "zt=0 → state copied",
-  "q": "Compare GRU and LSTM: gates, cell state, parameters."
+  "q": "Compare GRU and LSTM: gates, cell state, parameters.",
+  "logicLabId": "gru-equations"
  },
  {
   "cat": "ECE",

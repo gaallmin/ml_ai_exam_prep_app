@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import type { Mark } from '@/lib/stat41120/content/types';
-import EquationBlock from '@/components/EquationBlock';
+import AnswerTemplateBlock from '@/components/AnswerTemplateBlock';
 import { useSprintStore } from '@/lib/store';
 
 interface Props {
@@ -82,7 +82,7 @@ export default function EquationRecallCheck({ prompt, answer, keywords, formulaI
           <div className={`mark ${mark === 'Correct' ? 'correct' : mark === 'Partially correct' ? 'partial' : 'incorrect'}`}>
             {mark}
           </div>
-          <EquationBlock title="Expected answer" latex={answer} highlight={mark !== 'Correct'} />
+          <AnswerTemplateBlock title="Expected answer" highlight={mark !== 'Correct'}>{answer}</AnswerTemplateBlock>
           <button className="btn" onClick={() => { setMark(null); setUserAnswer(''); }}>Try another</button>
         </>
       )}
